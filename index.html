@@ -50,9 +50,11 @@
 					}
 
 					window.addEventListener('deviceorientation', e => {
-						alert(window.outerWidth);
-						canvas.width = window.outerWidth;
-						canvas.height = window.outerHeight;
+						if(window.outerWidth != canvas.width){
+							alert(window.outerWidth);
+							canvas.width = window.outerWidth;
+							canvas.height = window.outerHeight;
+						}
 					});
 
 					document.getElementById('btnclear').addEventListener('click', function(){
