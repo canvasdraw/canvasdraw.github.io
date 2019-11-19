@@ -1,4 +1,7 @@
 {
+	"icons":[
+		{"src": "page.png", "sizes": "48x48"}
+	],
 	"name" : "Cavas Draw",
 	"short_name" : "Draw",
 	"display" : "standalone",
