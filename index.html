@@ -34,6 +34,12 @@
 				ctx.lineTo(this.left, this.top);
 				ctx.stroke();
 			};
+
+			var update = function(){
+				ball.render();
+				localStorage.setItem('img', canvas.toDataURL());
+				requestAnimationFrame(update);
+			};
 			
 			var load = function(){
 				canvas = document.getElementById('canvas');  
@@ -54,34 +60,23 @@
 						ctx.clearRect(0, 0, canvas.width, canvas.height);
 					}, false);
 
-					canvas.addEventListener('touchend', function(e) {
-						mouse.down = false;
-					});
+					//canvas.addEventListener('touchend', function(e) {	});
 
 					canvas.addEventListener('touchmove', ontouchmove);
 
 					canvas.addEventListener('touchstart', function(e) {
-						mouse.down = true;
 						ctx.beginPath();
 						touches = e.touches;
 					});
 				}
+				requestAnimationFrame(update);
 			};
 			
 			var ontouchmove = function(e){
 				e.preventDefault();
 				touch = e.touches[0];
-				var px = touch.pageX;
-				var py = touch.pageY;
-
-				mouse.left = px;
-				mouse.top = py;
-				if(mouse.down){
-					ball.left = mouse.left;
-					ball.top = mouse.top;
-					ball.render();
-				}
-				localStorage.setItem('img', canvas.toDataURL());
+				ball.left = touch.pageX;
+				ball.top = touch.pageY;
 			};
 
 			var loadServiceWorker = e => {
