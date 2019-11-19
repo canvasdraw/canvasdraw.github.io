@@ -31,29 +31,30 @@
 				ctx.lineTo(this.left, this.top);
 				ctx.stroke();
 			};
+
+			var img = new Image();
+			img.addEventListener('load', function(e){
+				ctx.drawImage(img, 0, 0);
+			}, false);
 			
 			var load = function(){
 				canvas = document.getElementById('canvas');  
-				//canvas.width = window.outerWidth;
-				//canvas.height = window.outerHeight;
 				if (canvas.getContext) {  
 					ctx = canvas.getContext('2d');
 					ball = new Ball();
 					ctx.save();
 
 					if(localStorage.getItem('img')){
-						var img = new Image();
-						img.addEventListener('load', function(e){
-							ctx.drawImage(img, 0, 0);
-						}, false);
 						img.src = localStorage.getItem('img');
 					}
 
 					window.addEventListener('deviceorientation', e => {
 						if(window.outerWidth != canvas.width){
-							alert(window.outerWidth);
 							canvas.width = window.outerWidth;
 							canvas.height = window.outerHeight;
+							if(localStorage.getItem('img')){
+								img.src = localStorage.getItem('img');
+							}
 						}
 					});
 
