@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=400, user-scalable=no" />
+		<meta name="viewport" content="width=device-width, user-scalable=no" />
 		<link rel="manifest" href="canvasdraw.webmanifest" />
 		<title>Canvas Draw</title>
 		<style>
@@ -34,6 +34,8 @@
 			
 			var load = function(){
 				canvas = document.getElementById('canvas');  
+				//canvas.width = window.outerWidth;
+				//canvas.height = window.outerHeight;
 				if (canvas.getContext) {  
 					ctx = canvas.getContext('2d');
 					ball = new Ball();
@@ -46,6 +48,12 @@
 						}, false);
 						img.src = localStorage.getItem('img');
 					}
+
+					window.addEventListener('deviceorientation', e => {
+						alert(window.outerWidth);
+						canvas.width = window.outerWidth;
+						canvas.height = window.outerHeight;
+					});
 
 					document.getElementById('btnclear').addEventListener('click', function(){
 						localStorage.clear();
@@ -66,7 +74,7 @@
 			};
 			
 			var ontouchmove = function(e){
-				e.preventDefault();
+				//e.preventDefault();
 				touch = e.touches[0];
 				ball.left = touch.pageX;
 				ball.top = touch.pageY;
@@ -96,7 +104,7 @@
 		</script>  
 	</head>
 	<body>
-		<canvas id="canvas" width="400" height="400"></canvas> 
+		<canvas id="canvas"></canvas> 
 		<div style="position: absolute; left: 0; top: 0;">
 			<button id="btnclear">Clear</button>	
 		</div>
