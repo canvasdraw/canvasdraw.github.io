@@ -17,8 +17,7 @@
 			}
 		</style>
 		<script>    
-			var canvas, ctx, ball, fps = 24;
-			var mouse = {down:false};
+			var canvas, ctx, ball;
 			var touches = [];
 			
 			var Ball = function(){
@@ -60,8 +59,6 @@
 						ctx.clearRect(0, 0, canvas.width, canvas.height);
 					}, false);
 
-					//canvas.addEventListener('touchend', function(e) {	});
-
 					canvas.addEventListener('touchmove', ontouchmove);
 
 					canvas.addEventListener('touchstart', function(e) {
@@ -102,7 +99,7 @@
 		</script>  
 	</head>
 	<body>
-		<canvas id="canvas" width="400" height="600"></canvas> 
+		<canvas id="canvas" width="400" height="400"></canvas> 
 		<div>
 			<button id="btnclear">Clear</button>	
 		</div>
