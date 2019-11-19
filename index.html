@@ -18,7 +18,7 @@
 		</style>
 		<script>    
 			var canvas, ctx, ball;
-			var touches = [];
+			//var touches = [];
 			
 			var Ball = function(){
 				this.lineWidth = 5;
@@ -33,18 +33,13 @@
 				ctx.lineTo(this.left, this.top);
 				ctx.stroke();
 			};
-
-			var update = function(){
-				ball.render();
-				localStorage.setItem('img', canvas.toDataURL());
-				requestAnimationFrame(update);
-			};
 			
 			var load = function(){
 				canvas = document.getElementById('canvas');  
 				if (canvas.getContext) {  
 					ctx = canvas.getContext('2d');
 					ball = new Ball();
+					ctx.save();
 
 					if(localStorage.getItem('img')){
 						var img = new Image();
@@ -63,17 +58,20 @@
 
 					canvas.addEventListener('touchstart', function(e) {
 						ctx.beginPath();
-						touches = e.touches;
+					});
+
+					canvas.addEventListener('touchend', function(e) {
+						localStorage.setItem('img', canvas.toDataURL());
+						ctx.restore();
 					});
 				}
-				requestAnimationFrame(update);
 			};
 			
 			var ontouchmove = function(e){
-				e.preventDefault();
 				touch = e.touches[0];
 				ball.left = touch.pageX;
 				ball.top = touch.pageY;
+				ball.render();
 			};
 
 			var loadServiceWorker = e => {
@@ -94,7 +92,7 @@
 				}
 			};
 			
-			document.addEventListener('DOMContentLoaded', loadServiceWorker, false);
+			//document.addEventListener('DOMContentLoaded', loadServiceWorker, false);
 			document.addEventListener('DOMContentLoaded', load, false);
 		</script>  
 	</head>
