@@ -19,6 +19,7 @@
 		<script>    
 			var canvas, ctx, ball, fps = 24;
 			var mouse = {down:false};
+			var touches = [];
 			
 			var Ball = function(){
 				this.lineWidth = 5;
@@ -56,12 +57,29 @@
 					canvas.addEventListener('mousemove', mousemove, false);
 					canvas.addEventListener('mousedown', function(){mouse.down = true;ctx.beginPath();}, false);
 					canvas.addEventListener('mouseup', function(){mouse.down = false;}, false);
+
+					canvas.addEventListener('touchend', function(e) {
+						mouse.down = false;
+					});
+
+					canvas.addEventListener('touchmove', ontouchmove);
+
+					canvas.addEventListener('touchstart', function(e) {
+						mouse.down = true;
+						ctx.beginPath();
+						touches = e.touches;
+					});
 				}
 			};
 			
-			var mousemove = function(e){
-				mouse.left = e.clientX-canvas.offsetLeft;
-				mouse.top = e.clientY-canvas.offsetTop;
+			var ontouchmove = function(e){
+				e.preventDefault();
+				touch = e.touches[0];
+				var px = touch.pageX;
+				var py = touch.pageY;
+
+				mouse.left = px;
+				mouse.top = py;
 				if(mouse.down){
 					ball.left = mouse.left;
 					ball.top = mouse.top;
@@ -69,7 +87,26 @@
 				}
 				localStorage.setItem('img', canvas.toDataURL());
 			};
+
+			var loadServiceWorker = e => {
+				if ('serviceWorker' in navigator) {
+					navigator.serviceWorker.register('/sw.js', { scope: '/' }).then( reg => {
+						if(reg.installing) {
+							console.log('Service worker installing');
+						} else if(reg.waiting) {
+							console.log('Service worker installed');
+						} else if(reg.active) {
+							console.log('Service worker active');
+						}
+
+					}).catch(error => {
+						// registration failed
+						console.log('Registration failed with ' + error);
+						});
+				}
+			};
 			
+			document.addEventListener('DOMContentLoaded', loadServiceWorker, false);
 			document.addEventListener('DOMContentLoaded', load, false);
 		</script>  
 	</head>
