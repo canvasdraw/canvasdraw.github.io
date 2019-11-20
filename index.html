@@ -8,20 +8,6 @@
 		<link rel="stylesheet" type="text/css" href="/style.css">
 		<script>    
 			var canvas, ctx, ball;
-
-			var orientation = (function(){
-				let ori = 'portrait';
-				let set = orientation => {
-					ori = orientation;
-					portrait = (ori == 'portrait')?true:false;
-					landscape = (ori == 'landscape')?true:false;
-				};
-				return {
-					set : set,
-					portrait : () => {return (ori == 'portrait')?true:false;},
-					landscape : () => {return (ori == 'landscape')?true:false;}
-				};
-			})();
 			
 			var Ball = function(){
 				this.lineWidth = 5;
@@ -51,7 +37,6 @@
 			}, false);
 
 			var setSize = elm => {
-				orientation.set((window.outerWidth < window.outerHeight) ? 'portrait' : 'landscape');
 				elm.width = window.outerWidth;
 				elm.height = window.outerHeight;
 			};
@@ -59,9 +44,9 @@
 			var load = function(){
 				canvas = document.getElementById('canvas');
 				setSize(canvas);
+				ball = new Ball();
 				if (canvas.getContext) {  
 					ctx = canvas.getContext('2d');
-					ball = new Ball();
 					ctx.save();
 
 					if(localStorage.getItem('img')){
@@ -88,10 +73,12 @@
 						ctx.restore();
 					});
 				}
+
 				document.getElementById('btnclear').addEventListener('click', e => {
 					localStorage.clear();
 					ctx.clearRect(0, 0, canvas.width, canvas.height);
 				});
+
 				document.getElementById('inputcolor').addEventListener('change', e => {
 					ball.color = e.target.value;
 				});
