@@ -7,11 +7,11 @@
 		<title>Canvas Draw</title>
 		<link rel="stylesheet" type="text/css" href="/style.css">
 		<script>    
-			var canvas, ctx, ball;
+			var canvas, ctx, ball, btnclear, inputcolor;
 			
-			var Ball = function(){
+			var Ball = function(color){
 				this.lineWidth = 5;
-				this.color = 'black';
+				this.color = color;
 				this.left;
 				this.top;
 			};
@@ -44,8 +44,11 @@
 			
 			var load = function(){
 				canvas = document.getElementById('canvas');
+				btnclear = document.getElementById('btnclear');
+				inputcolor = document.getElementById('inputcolor');
+
 				setSize(canvas);
-				ball = new Ball();
+				ball = new Ball(inputcolor.value);
 				if (canvas.getContext) {  
 					ctx = canvas.getContext('2d');
 					ctx.save();
@@ -87,7 +90,6 @@
 			};
 			
 			var ontouchmove = function(e){
-				//e.preventDefault();
 				touch = e.touches[0];
 				ball.left = touch.pageX;
 				ball.top = touch.pageY;
