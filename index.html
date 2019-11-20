@@ -57,6 +57,7 @@
 					window.addEventListener('deviceorientation', e => {
 						if(window.outerWidth != canvas.width){
 							setSize(canvas);
+							ctx.save();
 							if(localStorage.getItem('img')){
 								img.src = localStorage.getItem('img');
 							}
