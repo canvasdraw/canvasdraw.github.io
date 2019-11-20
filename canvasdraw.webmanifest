@@ -6,6 +6,6 @@
 	"short_name" : "Draw",
 	"display" : "standalone",
 	"background_color" : "orange",
-	"start_url" : "index.html",
+	"start_url" : "/",
 	"scope" : "/"
 }
